@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: answerrank-classroom
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: answerrank-db
+          property: connectionString
+databases:
+  - name: answerrank-db
+    databaseName: answerrank
+    user: answerrank
